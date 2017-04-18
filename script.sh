@@ -3,10 +3,10 @@ URL="http://www.byu.edu/housing/apps/apts.aspx"
 
 # Preferences
 read -r -d '' PREFERENCES <<'EOF'
-Rooms: 1 2
+Rooms: 2
 Floor: 1 2 3
-Location: Wyview wymount
-Available: May June
+Location: Wyview
+Available: June July
 EOF
 
 function trimWhiteSpace(){
@@ -51,4 +51,7 @@ FORMATTED="$(echo "$LINES"                                              \
   | sed 's/<span[^<]*<\/span>//')"
 
 # Filter
-filterPreference "$FORMATTED" | tr '#' '\n'
+MESSAGE="$(filterPreference "$FORMATTED" |  tr '#' '\n')"
+
+# Send message
+echo "$MESSAGE" | mail -s "Apartments" 10DIGITNUMBER@vzwpix.com
